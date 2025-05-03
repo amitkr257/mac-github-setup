@@ -1,0 +1,41 @@
+ls -al ~/.ssh. It should exist.
+
+Follow below commands to generate new SHH key:
+cd /Users/amit/.ssh/
+
+1)
+remove all files using rm except for config file.
+
+2)
+ssh-keygen -t ed25519 -C "your_email@example.com"
+
+3)
+open ~/.ssh/config
+
+	In case you deleted the config file then do below 
+touch config
+
+4) Add below content:
+
+Host *.github.com
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/id_ed25519
+
+5)
+
+/usr/bin/ssh-add --apple-use-keychain ~/.ssh/id_ed25519
+
+Follow below page to add SSH key in github web
+https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account 
+
+When you create a new token remember to provide all permission to token to avoid git write issues.
+
+6) # Copies the contents of the id_ed25519.pub file to your clipboard
+pbcopy < ~/.ssh/id_ed25519.pub
+
+copy paste the content from clipboard to SSH key section. Delete previous key as well.
+
+7) Test
+ssh -T git@github.com
+This should authenticate you.
+
